@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Voynichese 2.0 - Interactive Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .container {
+            max-width: 960px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #0056b3; /* Voynich-blue */
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 8px;
+            margin-top: 30px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        p, li {
+            font-size: 1rem;
+            color: #555;
+        }
+        code, .eva {
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            background-color: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #c7254e; /* Pinkish code color */
+        }
+        .eva {
+            font-weight: bold;
+            color: #0056b3; /* Match heading color */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 10px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #e9ecef;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        button.listen-btn {
+            background-color: #28a745; /* Green */
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-left: 5px;
+            transition: background-color 0.2s;
+        }
+        button.listen-btn:hover {
+            background-color: #218838;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        #vocabSearch {
+            width: 98%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .quiz-section {
+            background-color: #e9f7ff; /* Light blue background */
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid #bce0fd;
+        }
+        .quiz-question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        #quizAnswer {
+            width: calc(100% - 100px);
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #submitAnswer {
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #quizFeedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .correct { color: #28a745; }
+        .incorrect { color: #dc3545; }
+        .info {
+             font-size: 0.9em;
+             color: #6c757d;
+             margin-top: -10px;
+             margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Learn Voynichese 2.0</h1>
+    <p>Welcome to the interactive guide for <strong>Voynichese 2.0</strong>, a constructed language inspired by the mysteries of the Voynich Manuscript. This guide covers the alphabet, pronunciation, basic grammar, and vocabulary we've developed.</p>
+    <p class="info"><strong>Note:</strong> Pronunciations provided by the "Listen" buttons use your browser's standard English voice and are approximations, especially for sounds not common in English.</p>
+
+    <!-- Section 1: Alphabet & Pronunciation -->
+    <div class="section">
+        <h2>The Alphabet (EVA Units) & Pronunciation</h2>
+        <p>Voynichese 2.0 uses a set of 48 functional units based on the Extensible Voynich Alphabet (EVA) transcription system. Click "Listen" to hear an approximate English pronunciation or description of the unit/sound.</p>
+        <div id="alphabetTableContainer">
+            <!-- Alphabet table will be generated here by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Section 2: Word Structure -->
+    <div class="section">
+        <h2>Word Structure</h2>
+        <p>Words in Voynichese 2.0 generally follow patterns observed in the Voynich Manuscript:</p>
+        <ul>
+            <li><strong>Length:</strong> Mostly 2-11 units long, typically 4-7 units.</li>
+            <li><strong>Positional Tendencies:</strong> Certain units strongly prefer the beginning (Initial), middle (Medial), or end (Final) of words.
+                <ul>
+                    <li><strong>Common Initials:</strong> <span class="eva">o, y, q, k, t, p, f, ch, sh, ckh, cth, cph, cfh, qo</span></li>
+                    <li><strong>Common Medials:</strong> <span class="eva">a, e, i, o, l, n, r, s, ch, sh, ee, ii, eee, iii, in, aiin, ar, or, al, ol</span></li>
+                    <li><strong>Common Finals:</strong> <span class="eva">y, l, m, n, r, s, 9, ee, ii, eee, iii, in, aiin, dy, ty, sy, ky, hy, edy</span></li>
+                </ul>
+            </li>
+            <li><strong>Sequence Constraints:</strong> Some sequences are very common (e.g., <span class="eva">qo</span>, <span class="eva">ch</span>, <span class="eva">sh</span>, final <span class="eva">-dy</span>), while others are rare or disallowed. <span class="eva">q</span> is almost always followed by <span class="eva">o</span> or a gallows character (<span class="eva">k, t, p, f</span>).</li>
+            <li><strong>Repetition:</strong> Only <span class="eva">e</span> and <span class="eva">i</span> can typically repeat to form <span class="eva">ee, ii, eee, iii</span>. Other repetitions are rare.</li>
+        </ul>
+        <p><strong>Example words showing structure:</strong></p>
+        <ul>
+            <li><span class="eva">qokeedy</span> (Initial <span class="eva">qo</span>, Medial <span class="eva">k</span>, Medial <span class="eva">ee</span>, Final <span class="eva">dy</span>)</li>
+            <li><span class="eva">shedy</span> (Initial <span class="eva">sh</span>, Medial <span class="eva">e</span>, Final <span class="eva">dy</span>)</li>
+            <li><span class="eva">lolar</span> (Initial <span class="eva">l</span>, Medial <span class="eva">o</span>, Medial <span class="eva">l</span>, Final <span class="eva">ar</span>)</li>
+        </ul>
+    </div>
+
+    <!-- Section 3: Vocabulary -->
+    <div class="section">
+        <h2>Vocabulary</h2>
+        <p>Here is the current list of Voynichese 2.0 words. Use the search box to filter by Voynichese (EVA) or English meaning. Click "Listen" to hear the Voynichese word pronounced (EVA characters spoken).</p>
+        <input type="text" id="vocabSearch" placeholder="Search vocabulary (e.g., plant, qokeedy)...">
+        <table id="vocabTable">
+            <thead>
+                <tr>
+                    <th>Voynichese 2.0 (EVA)</th>
+                    <th>Pronunciation (IPA Approximation)</th>
+                    <th>English Meaning</th>
+                    <th>Listen</th>
+                </tr>
+            </thead>
+            <tbody id="vocabTableBody">
+                <!-- Vocabulary list will be generated here by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Section 4: Grammar -->
+    <div class="section">
+        <h2>Basic Grammar</h2>
+        <h3>Word Order</h3>
+        <p>The default word order is <strong>Subject-Object-Verb (SOV)</strong>.</p>
+        <p><code>chey qokeedy dchol</code> (I plant see) = "I see the plant."</p>
+        <p>Flexibility is possible using markers (usually placed after the word/phrase they modify):</p>
+        <ul>
+            <li><span class="eva">z</span> <code title="/z/">[z]</code>: Marks the sentence topic (can move the topic, often to the front).
+                <br><code>qokeedy z chey dchol</code> (plant [Topic] I see) = "The plant, I see."</li>
+            <li><span class="eva">v</span> <code title="/v/">[v]</code>: Can explicitly mark the object (useful if deviating from SOV).
+                <br><code>chey dchol qokeedy v</code> (I see plant [Object]) = "I see the plant." (SVO structure)</li>
+        </ul>
+        <h3>Adjectives</h3>
+        <p>Adjectives follow the noun they modify.</p>
+        <p><code>qokeedy qokol</code> (plant big) = "big plant"</p>
+        <p><code>chey qokeedy qokol shedar dchol</code> (I plant big green see) = "I see the big green plant."</p>
+        <h3>Plurals</h3>
+        <p>Plurals are formed by repeating the first sound unit (EVA unit) of the noun, separated by a hyphen.</p>
+        <ul>
+            <li><code>qokeedy</code> (plant) &rarr; <span class="eva">qo-qokeedy</span> (plants)</li>
+            <li><code>shedy</code> (leaf) &rarr; <span class="eva">she-shedy</span> (leaves)</li>
+            <li><code>sory</code> (star) &rarr; <span class="eva">so-sory</span> (stars)</li>
+            <li><code>okal</code> (water) &rarr; <span class="eva">o-okal</span> (waters)</li>
+        </ul>
+        <h3>Verbs</h3>
+        <p>Verbs are currently **not** conjugated for tense (past/present/future) or person (I/you/he/etc.). Context or time adverbs (not yet defined) would indicate tense.</p>
+        <p><code>chey sar</code> = "I go."</p>
+        <p><code>sy sar</code> = "You go."</p>
+        <h3>Negation</h3>
+        <p>Use the particle <span class="eva">v</span> <code title="/v/">[v]</code>, typically placed **after** the verb, to negate it.</p>
+        <p><code>chey qokeedy dchol v</code> (I plant see not) = "I do not see the plant."</p>
+         <h3>Conjunctions & Basic Answers</h3>
+        <ul>
+            <li><strong>And / With:</strong> <span class="eva">g</span> <code title="/ɡ/">[g]</code></li>
+            <li><strong>But / However:</strong> <span class="eva">dal</span> <code title="/dal/">[dal]</code></li>
+            <li><strong>Yes:</strong> <span class="eva">e</span> <code title="/ɛ/">[ɛ]</code></li>
+            <li><strong>No:</strong> <span class="eva">o</span> <code title="/o/">[o]</code></li>
+        </ul>
+         <h3>Prepositions (Simple)</h3>
+         <p>Basic location words (likely function as postpositions, placed after the noun):</p>
+        <ul>
+            <li><strong>In / Inside:</strong> <span class="eva">in</span> <code title="/ɪn/">[ɪn]</code></li>
+            <li><strong>On / Upon:</strong> <span class="eva">ar</span> <code title="/ar/">[ar]</code></li>
+            <li><strong>Under / Below:</strong> <span class="eva">dy</span> <code title="/di/">[di]</code></li>
+        </ul>
+         <p>Example: <code>chey pody in dchol</code> (I container in see) = "I see [something] in the container."</p>
+    </div>
+
+     <!-- Section 5: Practice Quiz -->
+    <div class="section quiz-section">
+        <h2>Practice Quiz</h2>
+        <p>Test your knowledge! Translate the given word.</p>
+        <div class="quiz-question" id="quizQuestion">Loading question...</div>
+        <input type="text" id="quizAnswer" placeholder="Enter translation">
+        <button id="submitAnswer">Check</button>
+        <div id="quizFeedback"></div>
+    </div>
+
+</div>
+
+<script>
+    // --- Data Definitions ---
+    const alphabet = [
+        // Format: [EVA, IPA, Description for Speech]
+        // Core Vowels
+        ['a', '/a/', 'a, as in father'], ['o', '/o/', 'o, as in boat'], ['e', '/ɛ/', 'e, as in bet'], ['i', '/ɪ/', 'i, as in bit'], ['y', '/i/', 'y, long e as in bee'],
+        // Core Consonants
+        ['d', '/d/', 'd, as in dog'], ['l', '/l/', 'l, as in lip'], ['m', '/m/', 'm, as in mat'], ['n', '/n/', 'n, as in nap'], ['r', '/r/', 'r, rolled or tapped r'], ['s', '/s/', 's, as in sip'],
+        // Gallows
+        ['k', '/k/', 'k, as in cat'], ['t', '/t/', 't, as in top'], ['p', '/p/', 'p, as in pat'], ['f', '/f/', 'f, as in fat'],
+        // Other Common
+        ['c', '/ɣ/', 'gh, voiced velar fricative (like Spanish g in lago)'], ['h', '/h/', 'h, as in hat'], ['q', '/q/', 'q, voiceless uvular stop (like Arabic qaf)'], ['8', '/œ/', 'eu, like French oeuf or German ö'], ['9', '/ŋ/', 'ng, as in sing'],
+        // Digraphs/Units
+        ['ch', '/ʃ/', 'sh, as in ship'], ['sh', '/ʂ/', 'shr, retroflex sh (like Mandarin shi)'],
+        // Bench+Gallows
+        ['ckh', '/x/', 'kh, voiceless velar fricative (like German Bach)'], ['cth', '/θ/', 'th, as in thin'], ['cph', '/ɸ/', 'f, voiceless bilabial fricative (like blowing candle)'], ['cfh', '/fʰ/', 'f-h, aspirated f'],
+        // Vowel Combos
+        ['ee', '/eː/', 'ey, long e, as in French fée'], ['ii', '/iː/', 'ee, long ee, as in see'], ['eee', '/ɛː/', 'ehh, long eh sound'], ['iii', '/ɪː/', 'ihh, long ih sound'], ['in', '/ɪn/', 'in, as in inn'], ['aiin', '/aɪn/', 'ine, as in mine'],
+        // Vowel+Liquid
+        ['ar', '/ar/', 'ar, as in car'], ['or', '/or/', 'or, as in for'], ['al', '/al/', 'al, as in pal'], ['ol', '/ol/', 'ol, as in pole'],
+        // Consonant+Y
+        ['dy', '/di/', 'dee'], ['ty', '/ti/', 'tee'], ['sy', '/si/', 'see'], ['ky', '/ki/', 'kee'], ['hy', '/hi/', 'hee'], ['edy', '/ɛdi/', 'eddy'],
+        // Q Combo
+        ['qo', '/qo/', 'qoh'],
+        // Rare
+        ['g', '/ɡ/', 'g, as in go'], ['x', '/ks/', 'ks, as in fox'], ['v', '/v/', 'v, as in vat'], ['z', '/z/', 'z, as in zoo'], ['j', '/ʒ/', 'zh, as in vision']
+    ];
+
+    const vocabularyList = [
+         // Format: { voy: EVA, ipa: IPA, eng: English }
+        // Plants
+        { voy: 'qokeedy', ipa: '/qokɛːdi/', eng: 'Plant / Herb' }, { voy: 'tchor', ipa: '/tʃor/', eng: 'Root' }, { voy: 'shedy', ipa: '/ʂɛdi/', eng: 'Leaf' },
+        { voy: 'faiin', ipa: '/faɪn/', eng: 'Flower' }, { voy: 'lolar', ipa: '/lolar/', eng: 'Stem / Stalk' }, { voy: 'toky', ipa: '/toki/', eng: 'Seed' },
+        { voy: 'damy', ipa: '/dami/', eng: 'Fruit / Berry' }, { voy: 'kchor', ipa: '/kʃor/', eng: 'Bark' }, { voy: 'tchol', ipa: '/tɣol/', eng: 'Soil / Earth' },
+        // Astronomical
+        { voy: 'sory', ipa: '/sori/', eng: 'Star' }, { voy: 'dam', ipa: '/dam/', eng: 'Sun' }, { voy: 'chesy', ipa: '/ʃɛsi/', eng: 'Moon' },
+        { voy: 'qotar', ipa: '/qotar/', eng: 'Sky / Heaven' }, { voy: 'sokar', ipa: '/sokar/', eng: 'Planet' }, { voy: 'laiin', ipa: '/laɪn/', eng: 'Light' },
+        { voy: 'nody', ipa: '/nodi/', eng: 'Dark / Darkness' }, { voy: 'chedy', ipa: '/ʃɛdi/', eng: 'Day' }, { voy: 'chesor', ipa: '/ʃɛsor/', eng: 'Night' },
+        // Balneological
+        { voy: 'okal', ipa: '/okal/', eng: 'Water' }, { voy: 'shol', ipa: '/ʃol/', eng: 'To Flow / Stream' }, { voy: 'pody', ipa: '/podi/', eng: 'Container / Jar' },
+        { voy: 'lchedy', ipa: '/lɣɛdi/', eng: 'To Bathe / Immerse' }, { voy: 'lokal', ipa: '/lokal/', eng: 'Pool / Basin' },
+        { voy: 'solor', ipa: '/solor/', eng: 'Pipe / Tube' }, { voy: 'lokedy', ipa: '/lokɛdi/', eng: 'Liquid' }, { voy: 'okaly', ipa: '/okali/', eng: 'Wet' },
+        { voy: 'sarom', ipa: '/sarom/', eng: 'Dry' },
+        // Biological / Humanoid
+        { voy: 'dainar', ipa: '/daɪnar/', eng: 'Body' }, { voy: 'tchey', ipa: '/tʃɛi/', eng: 'Head' }, { voy: 'laky', ipa: '/laki/', eng: 'Hand / Arm' },
+        { voy: 'aiin', ipa: '/aɪn/', eng: 'Eye' }, { voy: 'shedaiin', ipa: '/ʂɛdaɪn/', eng: 'Small Creature / Nymph' },
+        // Abstract / Functional
+        { voy: 'qokol', ipa: '/qokol/', eng: 'Big / Large' }, { voy: 'tiky', ipa: '/tiki/', eng: 'Small' }, { voy: 'loly', ipa: '/loli/', eng: 'Good' },
+        { voy: 'qody', ipa: '/qodi/', eng: 'Bad' }, { voy: 'sor', ipa: '/sor/', eng: 'New' }, { voy: 'tcholor', ipa: '/tɣolor/', eng: 'Old' },
+        { voy: 'faly', ipa: '/fali/', eng: 'To Give' }, { voy: 'keer', ipa: '/keːr/', eng: 'To Take' }, { voy: 'cholor', ipa: '/ʃolor/', eng: 'To Make / Create' },
+        { voy: 'loky', ipa: '/loki/', eng: 'To Need / Want' }, { voy: 'qochey', ipa: '/qoʃɛi/', eng: 'To Think / Know' },
+        { voy: 'in', ipa: '/ɪn/', eng: 'In / Inside' }, { voy: 'ar', ipa: '/ar/', eng: 'On / Upon' }, { voy: 'dy', ipa: '/di/', eng: 'Under / Below' },
+        { voy: 'g', ipa: '/ɡ/', eng: 'With / And' }, { voy: 'dal', ipa: '/dal/', eng: 'But / However' }, { voy: 'v', ipa: '/v/', eng: 'Not / Negation' },
+        { voy: 'z', ipa: '/z/', eng: 'Topic Marker' },
+        { voy: 'e', ipa: '/ɛ/', eng: 'Yes' }, { voy: 'o', ipa: '/o/', eng: 'No' },
+        // Basic Concepts & Pronouns
+        { voy: 'chey', ipa: '/ʃɛi/', eng: 'I / Me' }, { voy: 'sy', ipa: '/si/', eng: 'You' }, { voy: 'dchol', ipa: '/dɣol/', eng: 'To See / Look' },
+        { voy: 'sar', ipa: '/sar/', eng: 'To Go / Move' }, { voy: 'dain', ipa: '/daɪn/', eng: 'Thing / Object' },
+        // Colors
+        { voy: 'kedy', ipa: '/kɛdi/', eng: 'Red' }, { voy: 'shor', ipa: '/ʃor/', eng: 'Blue' }, { voy: 'shedar', ipa: '/ʂɛdar/', eng: 'Green' },
+        { voy: 'saly', ipa: '/sali/', eng: 'Yellow' }, { voy: 'mor', ipa: '/mor/', eng: 'Black' }, { voy: 'cheol', ipa: '/ʃɛol/', eng: 'White' }
+    ];
+
+    // --- Speech Synthesis Setup ---
+    const synth = window.speechSynthesis;
+    let voices = [];
+
+    function populateVoiceList() {
+        voices = synth.getVoices().filter(voice => voice.lang.startsWith('en')); // Prefer English voices
+        if (voices.length === 0) {
+             voices = synth.getVoices(); // Fallback to any voice
+        }
+       // console.log("Available voices:", voices);
+    }
+
+    populateVoiceList();
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = populateVoiceList;
+    }
+
+    function speak(text) {
+        if (synth.speaking) {
+            console.error('SpeechSynthesis.speaking');
+            return;
+        }
+        if (text !== '') {
+            const utterThis = new SpeechSynthesisUtterance(text);
+            utterThis.onend = function (event) {
+                // console.log('SpeechSynthesisUtterance.onend');
+            }
+            utterThis.onerror = function (event) {
+                console.error('SpeechSynthesisUtterance.onerror', event);
+            }
+            // Attempt to use a standard English voice if available
+            const selectedVoice = voices.find(voice => voice.name === 'Google US English') || voices.find(voice => voice.lang === 'en-US') || voices[0];
+             if (selectedVoice) {
+                 utterThis.voice = selectedVoice;
+             }
+            // Optional: Adjust rate or pitch slightly if desired
+            // utterThis.rate = 0.9;
+             // utterThis.pitch = 1.1;
+            synth.speak(utterThis);
+        }
+    }
+
+    // --- Generate Alphabet Table ---
+    function generateAlphabetTable() {
+        const container = document.getElementById('alphabetTableContainer');
+        let tableHTML = '<table><thead><tr><th>EVA Unit</th><th>IPA (Approx.)</th><th>Description / Sound</th><th>Listen</th></tr></thead><tbody>';
+        alphabet.forEach(([eva, ipa, description]) => {
+            tableHTML += `<tr>
+                <td><span class="eva">${eva}</span></td>
+                <td><code>${ipa}</code></td>
+                <td>${description}</td>
+                <td><button class="listen-btn" data-text-to-speak="${description}">Listen</button></td>
+            </tr>`;
+        });
+        tableHTML += '</tbody></table>';
+        container.innerHTML = tableHTML;
+    }
+
+    // --- Generate Vocabulary Table ---
+     function generateVocabTable(filter = '') {
+        const tbody = document.getElementById('vocabTableBody');
+        let tableHTML = '';
+        const filterLower = filter.toLowerCase();
+
+        vocabularyList.forEach(item => {
+            const voyLower = item.voy.toLowerCase();
+            const engLower = item.eng.toLowerCase();
+
+            if (filter === '' || voyLower.includes(filterLower) || engLower.includes(filterLower)) {
+                tableHTML += `<tr>
+                    <td><span class="eva">${item.voy}</span></td>
+                    <td><code>${item.ipa}</code></td>
+                    <td>${item.eng}</td>
+                    <td><button class="listen-btn" data-text-to-speak="${item.voy}">Listen</button></td>
+                </tr>`;
+            }
+        });
+        tbody.innerHTML = tableHTML;
+         attachListenButtonListeners('#vocabTableBody'); // Re-attach listeners after regenerating
+    }
+
+     // --- Attach Listen Button Listeners ---
+     function attachListenButtonListeners(containerSelector) {
+        const container = document.querySelector(containerSelector);
+        if (container) {
+            container.addEventListener('click', function(event) {
+                if (event.target && event.target.classList.contains('listen-btn')) {
+                    const textToSpeak = event.target.getAttribute('data-text-to-speak');
+                    speak(textToSpeak);
+                }
+            });
+        }
+     }
+
+    // --- Vocabulary Search ---
+    const vocabSearchInput = document.getElementById('vocabSearch');
+    vocabSearchInput.addEventListener('input', (e) => {
+        generateVocabTable(e.target.value);
+    });
+
+    // --- Practice Quiz Logic ---
+    const quizQuestionEl = document.getElementById('quizQuestion');
+    const quizAnswerEl = document.getElementById('quizAnswer');
+    const submitAnswerBtn = document.getElementById('submitAnswer');
+    const quizFeedbackEl = document.getElementById('quizFeedback');
+
+    let currentQuizWord = null;
+    let currentQuizDirection = 'VtoE'; // VtoE or EtoV
+
+    function loadQuizQuestion() {
+        quizAnswerEl.value = '';
+        quizFeedbackEl.textContent = '';
+        quizFeedbackEl.className = '';
+        quizAnswerEl.disabled = false;
+        submitAnswerBtn.disabled = false;
+
+
+        currentQuizWord = vocabularyList[Math.floor(Math.random() * vocabularyList.length)];
+        // Randomly choose direction, but avoid markers/simple answers for E->V if they are ambiguous
+        const avoidEtoV = ['Topic Marker', 'Not / Negation', 'With / And', 'Yes', 'No'].includes(currentQuizWord.eng);
+        currentQuizDirection = (Math.random() < 0.5 && !avoidEtoV) ? 'EtoV' : 'VtoE';
+
+        if (currentQuizDirection === 'VtoE') {
+            quizQuestionEl.innerHTML = `What is the English meaning of <span class="eva">${currentQuizWord.voy}</span>?`;
+        } else {
+            // For E->V, present only the first meaning if multiple exist
+            const primaryEnglish = currentQuizWord.eng.split(' / ')[0].trim();
+            quizQuestionEl.textContent = `What is the Voynichese 2.0 word for "${primaryEnglish}"?`;
+        }
+    }
+
+     function checkQuizAnswer() {
+        const userAnswer = quizAnswerEl.value.trim().toLowerCase();
+        let correctAnswer = '';
+        let isCorrect = false;
+
+         if (currentQuizDirection === 'VtoE') {
+             // Allow any of the meanings if separated by " / "
+             correctAnswer = currentQuizWord.eng.toLowerCase();
+             const possibleAnswers = correctAnswer.split(' / ').map(s => s.trim());
+             isCorrect = possibleAnswers.includes(userAnswer);
+         } else { // EtoV
+             correctAnswer = currentQuizWord.voy.toLowerCase();
+             isCorrect = (userAnswer === correctAnswer);
+         }
+
+        if (isCorrect) {
+            quizFeedbackEl.textContent = 'Correct!';
+            quizFeedbackEl.className = 'correct';
+        } else {
+            let feedback = `Incorrect. The correct answer is: ${correctAnswer}`;
+            if (currentQuizDirection === 'VtoE') {
+                feedback = `Incorrect. Correct: ${currentQuizWord.eng}`;
+            } else {
+                 feedback = `Incorrect. Correct: ${currentQuizWord.voy}`;
+            }
+            quizFeedbackEl.textContent = feedback;
+            quizFeedbackEl.className = 'incorrect';
+        }
+         quizAnswerEl.disabled = true;
+         submitAnswerBtn.disabled = true;
+
+         // Load next question after a delay
+         setTimeout(loadQuizQuestion, 2500);
+    }
+
+    submitAnswerBtn.addEventListener('click', checkQuizAnswer);
+    quizAnswerEl.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+             event.preventDefault(); // Prevent form submission if wrapped in form
+            checkQuizAnswer();
+        }
+    });
+
+
+    // --- Initial Setup ---
+    document.addEventListener('DOMContentLoaded', () => {
+        generateAlphabetTable();
+        generateVocabTable(); // Initial population
+        loadQuizQuestion();
+
+        // Attach listeners for initially generated buttons
+        attachListenButtonListeners('#alphabetTableContainer');
+       // Listeners for vocab table are attached within generateVocabTable
+    });
+
+</script>
+
+</body>
+</html>
